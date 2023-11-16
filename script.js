@@ -42,14 +42,12 @@ deleteButton.addEventListener('click', ()=> {
 
 equalButton.addEventListener('click', ()=> {
     if (currentNumber && displayNumber) {
-
         if (lastOperation === "/" && displayNumber === "0") {
             alert("Cannot divide by 0");
             return;
         }
-
         displayLineOne.textContent = `${currentNumber} ${lastOperation} ${displayNumber} =`;
-        displayNumber = operation(lastOperation, currentNumber, displayNumber);
+        displayNumber = operate(lastOperation, currentNumber, displayNumber);
         displayLineTwo.textContent = displayNumber;
         currentNumber = ""
     }
@@ -72,13 +70,11 @@ function operatorUpdate(operator) {
     lastOperation = operator;
 
     if (displayNumber && currentNumber) {
-
         if (lastOperation === "/" && displayNumber === "0") {
             alert("Cannot divide by 0");
             return;
         }
-
-        currentNumber = operation(lastOperation, currentNumber, displayNumber);
+        currentNumber = operate(lastOperation, currentNumber, displayNumber);
         displayLineTwo.textContent = currentNumber;
     } else if (displayNumber) {
         currentNumber = displayNumber;
@@ -87,7 +83,7 @@ function operatorUpdate(operator) {
     displayNumber = "";
 }
 
-function operation(operator, a, b) {
+function operate(operator, a, b) {
     let returnString = "";
 
     switch (operator) {
@@ -106,3 +102,23 @@ function operation(operator, a, b) {
     }
     return returnString.slice(0,maxDisplayDigit);
 }
+
+function handleKeyPress(e) {
+    const key = e.key;
+
+    if ((key >= '0' && key <= '9') || key === '.') {
+        updateDisplay(key);
+    }
+    else if (['+', '-', '*', '/'].includes(key)) {
+        operatorUpdate(key);
+    }
+    else if (key === 'Enter') {
+        equalButton.click();
+    } else if (key === 'Backspace') {
+        deleteButton.click();
+    } else if (key === 'Escape') {
+        clearButton.click();
+    }
+}
+
+document.addEventListener('keydown', handleKeyPress);
