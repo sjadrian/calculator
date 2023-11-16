@@ -20,7 +20,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: rgb(230, 230, 230);
+    background-color: rgb(240, 240, 240);
 }
 
 main {
@@ -39,7 +39,7 @@ main {
 }
 
 .display {
-    background-color: rgb(219, 219, 219);
+    background-color: rgb(230, 230, 230);;
     margin: 20px;
     border-radius: 12px;
     border: 2px solid black ;
@@ -50,10 +50,12 @@ main {
 
 .line-one {
     font-size: 24px;
+    min-height: 36px;
 }
 
 .line-two {
     font-size: 42px;
+    min-height: 63px;
 }
 
 .container {
@@ -103,7 +105,7 @@ main {
 }
 
 .button {
-    background-color: rgb(219, 219, 219);
+    background-color: rgb(230, 230, 230);
     padding: 14px;
     width: 100%;
     font-size: 18px;
@@ -123,5 +125,5 @@ button {
 footer {
     text-align: center;
     margin-bottom: 12px;
-    font-size: 18px;
+    font-size: 24px;
 }
