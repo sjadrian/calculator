@@ -1,22 +1,32 @@
-const clearButton = document.querySelector('.clear')
-const displayLineOne = document.querySelector('.line-one')
-const displayLineTwo = document.querySelector('.line-two')
+const clearButton = document.querySelector('.clear');
+const deleteButton = document.querySelector('.delete');
+const equalButton = document.querySelector('.equal');
 
-const addButton = document.querySelector('.add')
-const deleteButton = document.querySelector('.delete')
-const equalButton = document.querySelector('.equal')
+const displayLineOne = document.querySelector('.line-one');
+const displayLineTwo = document.querySelector('.line-two');
 
+const buttons = document.querySelectorAll('.digit');
+const operators = document.querySelectorAll('.operator');
 
-const oneButton = document.querySelector('.one')
-const twoButton = document.querySelector('.two')
+const maxDisplayDigit = 15;
 
 let currentNumber = "";
 let displayNumber = "";
 let lastOperation = "";
 
-clearButton.addEventListener('click', ()=> {
-    console.log("clear button clicked")
+buttons.forEach(btn => {
+    btn.addEventListener('click', ()=> {
+        updateDisplay(btn.getAttribute("data-value"));
+    })
+})
 
+operators.forEach(btn => {
+    btn.addEventListener('click', ()=> {
+        operatorUpdate(btn.getAttribute('data-value'));
+    })
+})
+
+clearButton.addEventListener('click', ()=> {
     currentNumber = "";
     displayNumber = "0";
     lastOperation = "";
@@ -26,44 +36,61 @@ clearButton.addEventListener('click', ()=> {
 });
 
 deleteButton.addEventListener('click', ()=> {
-    console.log("clear button clicked")
-    console.log(displayNumber);
     displayNumber = displayNumber.slice(0, -1);
-    console.log(displayNumber);
     displayLineTwo.textContent = displayNumber;
-});
-
-oneButton.addEventListener('click', ()=> {
-    console.log("one button clicked")
-    displayNumber = displayNumber + 1;
-    displayLineTwo.textContent = displayNumber;
-    
-});
-
-twoButton.addEventListener('click', ()=> {
-    console.log("two button clicked")
-
-    currentNumber = currentNumber + 2;
-    displayLineTwo.textContent = currentNumber;
-});
-
-
-addButton.addEventListener('click', ()=> {
-    console.log("add button clicked")
-
-    
-    lastOperation = "+";
-    displayLineOne.textContent = currentNumber + " " + lastOperation;
-    currentNumber = "";
-    
 });
 
 equalButton.addEventListener('click', ()=> {
-    console.log("equal button clicked")
-
-    
-    lastOperation = "+";
-    displayLineOne.textContent = currentNumber + " " + lastOperation;
-    currentNumber = "";
-    
+    if (currentNumber && displayNumber) {
+        displayLineOne.textContent = `${currentNumber} ${lastOperation} ${displayNumber} =`;
+        displayNumber = operation(lastOperation, currentNumber, displayNumber);
+        displayLineTwo.textContent = displayNumber;
+        currentNumber = ""
+    }
 });
+
+function updateDisplay(number) {
+    if (displayNumber === "0" && number !== ".") {
+        displayNumber = "";
+    }
+
+    if (displayNumber.length < maxDisplayDigit && number !== ".") {
+        displayNumber += number;
+    } else if (displayNumber.length < maxDisplayDigit && !displayNumber.includes(".")) {
+        displayNumber += number;
+    }
+    displayLineTwo.textContent = displayNumber;
+}
+
+function operatorUpdate(operator) {
+    lastOperation = operator;
+
+    if (displayNumber && currentNumber) {
+        currentNumber = operation(lastOperation, currentNumber, displayNumber);
+        displayLineTwo.textContent = currentNumber;
+    } else if (displayNumber) {
+        currentNumber = displayNumber;
+    }
+    displayLineOne.textContent = `${currentNumber} ${lastOperation}`;
+    displayNumber = "";
+}
+
+function operation(operator, a, b) {
+    let returnString = "";
+
+    switch (operator) {
+        case "+": 
+            returnString = String(Number(a) + Number(b));
+            break;
+        case "-":
+            returnString = String(Number(a) - Number(b));
+            break;
+        case "*":
+            returnString = String(Number(a) * Number(b));
+            break;
+        case "/":
+            returnString = String(Number(a) / Number(b));
+            break;
+    }
+    return returnString.slice(0,maxDisplayDigit);
+}
