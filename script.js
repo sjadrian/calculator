@@ -42,6 +42,12 @@ deleteButton.addEventListener('click', ()=> {
 
 equalButton.addEventListener('click', ()=> {
     if (currentNumber && displayNumber) {
+
+        if (lastOperation === "/" && displayNumber === "0") {
+            alert("Cannot divide by 0");
+            return;
+        }
+
         displayLineOne.textContent = `${currentNumber} ${lastOperation} ${displayNumber} =`;
         displayNumber = operation(lastOperation, currentNumber, displayNumber);
         displayLineTwo.textContent = displayNumber;
@@ -66,6 +72,12 @@ function operatorUpdate(operator) {
     lastOperation = operator;
 
     if (displayNumber && currentNumber) {
+
+        if (lastOperation === "/" && displayNumber === "0") {
+            alert("Cannot divide by 0");
+            return;
+        }
+
         currentNumber = operation(lastOperation, currentNumber, displayNumber);
         displayLineTwo.textContent = currentNumber;
     } else if (displayNumber) {
