@@ -128,3 +128,53 @@ footer {
     margin-bottom: 12px;
     font-size: 24px;
 }
+
+
+@media screen and (max-width: 600px) {
+    body {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+    }
+
+    main {
+        width: 90%;
+        height: 100%;
+        margin: 20px;
+    }
+
+    .calculator {
+        width: 100%; /* Use full width on smaller screens */
+    }
+
+    .display {
+        margin: 10px;
+        padding: 15px;
+        /* width: calc(100% - 20px); Adjust width to account for padding */
+        width: calc(90%);
+
+        font-size: 24px; /* Larger font for better readability */
+    }
+
+    .line-one, .line-two {
+        min-height: 50px; /* Increase height for touch targets */
+    }
+
+    .container, .small-buttons-container {
+        flex-direction: row;
+    }
+
+    .row {
+        margin: 10px 20px;
+    }
+
+    .button, .clear, .delete {
+        font-size: 20px; /* Larger font size for easier interaction */
+        padding: 15px;
+        min-height: 50px; /* Increase button height for touch accessibility */
+    }
+
+    footer {
+        font-size: 18px;
+    }
+}
